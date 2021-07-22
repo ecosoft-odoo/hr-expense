@@ -154,9 +154,3 @@ class HrExpenseSheet(models.Model):
     def _cancel_payments(self, payments):
         for rec in payments:
             rec.move_id.with_context({"force_delete": True}).unlink()
-
-    def action_register_payment(self):
-        action = super().action_register_payment()
-        if self._name == "hr.expense.sheet":
-            action["context"].update({"expense_sheet_ids": self.ids})
-        return action
